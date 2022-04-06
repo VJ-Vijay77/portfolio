@@ -76,15 +76,32 @@ const responseform = document.getElementById('responseform');
 const fname= document.getElementById('fname');
 const lname = document.getElementById('lname');
 const phone = document.getElementById('phone');
+const message = document.getElementById('subject')
+const scripturl =  "https://script.google.com/macros/s/AKfycbyeZgvmHz4WWhNc0uaodtntfb2o794DKClptEsK/exec"
 
 
 
 responseform.addEventListener('submit', (e) => {
     checkInputs();
-    if(isFormValid===true){
-        responseform.submit();
-    }else{
+    e.preventDefault();
+    // if(isFormValid===true){
+    //     responseform.submit();
+    // }else{
+    //     e.preventDefault();
+    // }
+    if(Boolean(isFormValid())){
+
+        fetch(scripturl, { method: 'POST', body: new FormData(responseform) })
+        .catch(error => console.error('Error!', error.message))
+        alert("Message sent succesfully"); 
+        window.location.reload()
+    
+    }
+    
+    else{
+    
         e.preventDefault();
+    
     }
      
      
@@ -94,43 +111,59 @@ function checkInputs(){
    const fnameValue = fname.value.trim();
    const lnameValue = lname.value.trim();
    const phoneValue = phone.value.trim();
+   const messageValue = message.value.trim();
 
    if(fnameValue === ''){
        setErrorFor(fname, 'Name cannot be blank');
+       
 
    }else if(fname.value.trim().length <3 || fname.value.trim().length >15){
 
     setErrorFor(fname, 'Name should have atleast 3 characters and maximum 15');
+    
 
    }else if(!fname.value.trim().match(/[A-Za-z]$/) ){
 
     setErrorFor(fname, 'Enter Valid name');
+    
    }
    
    else{
     setSuccessFor(fname);
+   
    }
 
 
    if(lnameValue === ''){
     setErrorFor(lname, 'Email cannot be blank');
+    
 
-}else if(!isEmail(lnameValue)){
-    setErrorFor(lname, 'Email is not valid');
-}
-else{
- setSuccessFor(lname);
-}
+    }else if(!isEmail(lnameValue)){
+        setErrorFor(lname, 'Email is not valid');
+        
+    }
+    else{
+    setSuccessFor(lname);
+    
+    }
 
-if(phoneValue === ''){
-    setErrorFor(phone, 'Number cannot be blank');
+    if(phoneValue === ''){
+        setErrorFor(phone, 'Number cannot be blank');
 
-}else if(!phone.value.trim().match(/^\d{10}$/)){
-    setErrorFor(phone, 'Number is not valid');
-}
-else{
- setSuccessFor(phone);
-}
+    }else if(!phone.value.trim().match(/^\d{10}$/)){
+        setErrorFor(phone, 'Number is not valid');
+    }
+    else{
+    setSuccessFor(phone);
+    }
+
+    if(messageValue.length <= 15){
+        setErrorFor(message, 'Message cannot be less than 15 words');
+
+    }
+    else{
+    setSuccessFor(message);
+    }
 
 
 
@@ -158,12 +191,12 @@ function isEmail(lname){
 }
 
 function isFormValid(){
-    const checkval = responseform.querySelectorAll('.namediv');
+    const checkval = responseform.querySelectorAll('.form-control');
     let result = true;
-    checkval.forEach((formControl)=>{
-        if(formControl.classList.contains('error')){
+    checkval.forEach((container)=>{
+        if(container.classList.contains('error')){
             result = false;
         }
     });
-    return false;
+    return result;
 }

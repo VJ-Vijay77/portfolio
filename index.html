@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- Created By CodingNepal -->
 <html lang="en">
 
 <head>
@@ -318,7 +317,7 @@
                         <textarea class="countryb" id="subject" name="message" placeholder="Write your message..." style="height: 170px;"></textarea>
                         <i class="fas fa-exclamation-circle firstex2"></i>
                         <br><small>Error message</small>
-                        <br><input id="sumbit" class="submitbutton" type="submit" value="submit">
+                        <br><input id="submit" class="submitbutton" type="submit" value="submit">
                          </div>
 
                     </form>
@@ -346,27 +345,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
-    
-    <script>
+    <script src="script.js"></script> 
+    <!-- <script>
+        
         $("#responseform").submit((e)=>{
             e.preventDefault()
             $.ajax({
                 url:"https://script.google.com/macros/s/AKfycbyeZgvmHz4WWhNc0uaodtntfb2o794DKClptEsK/exec",
                 data:$("#responseform").serialize(),
                 method:"post",
-                success:function (response){
+             success:function (response){
                     alert("Form submitted successfully")
                     window.location.reload()
                     //window.location.href="https://google.com"
-                },
-                error:function (err){
+             } ,
+                 error:function (err){
                     alert("Something Error")
     
-                }
-            })
-        })
-    </script>
-    <script src="script.js"></script>
+                 }
+            }
+            )
+        }
+        )
+  
+    </script> -->
+    
 </body>
 
 </html>
